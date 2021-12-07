@@ -564,6 +564,267 @@
                 }
             }
         },
+        "form": {
+            "description": "An input form.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "inputs": {
+                    "description": "Input items for the input form.",
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/$defs/checkboxFormItem"
+                            },
+                            {
+                                "$ref": "#/$defs/optionButtonsFormItem"
+                            },
+                            {
+                                "$ref": "#/$defs/selectFormItem"
+                            },
+                            {
+                                "$ref": "#/$defs/textFormItem"
+                            },
+                            {
+                                "$ref": "#/$defs/emailFormItem"
+                            },
+                            {
+                                "$ref": "#/$defs/phoneNumberFormItem"
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "checkboxFormItem": {
+            "description": "A checkbox form item.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "description": "The type of the input field.",
+                    "enum": [
+                        "checkbox"
+                    ]
+                },
+                "name": {
+                    "description": "Unique name of the input field.",
+                    "type": "string"
+                },
+                "initialValue": {
+                    "description": "Initial value to be pre-filled into the input field.",
+                    "type": [
+                        "boolean"
+                    ]
+                },
+                "label": {
+                    "description": "The label that is displayed to the user for the input field.",
+                    "type": "string"
+                },
+                "required": {
+                    "description": "If the field is required or not.",
+                    "type": "boolean"
+                }
+            }
+        },
+        "optionButtonsFormItem": {
+            "description": "An options button form item.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "description": "The type of the input field.",
+                    "enum": [
+                        "optionButtons"
+                    ]
+                },
+                "name": {
+                    "description": "Unique name of the input field.",
+                    "type": "string"
+                },
+                "initialValue": {
+                    "description": "Initial value to be pre-filled into the input field.",
+                    "type": [
+                        "string",
+                        "boolean"
+                    ]
+                },
+                "label": {
+                    "description": "The label that is displayed to the user for the input field.",
+                    "type": "string"
+                },
+                "required": {
+                    "description": "If the field is required or not.",
+                    "type": "boolean"
+                },
+                "options": {
+                    "description": "An array of optional values the user can choose.",
+                    "type": "array",
+                    "items": {
+                        "label": {
+                            "description": "Label displayed to the user.",
+                            "type": "string"
+                        },
+                        "value": {
+                            "description": "The value retured to the bot if the user chooses this option.",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "selectFormItem": {
+            "description": "A select form item.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "description": "The type of the input field.",
+                    "enum": [
+                        "select"
+                    ]
+                },
+                "name": {
+                    "description": "Unique name of the input field.",
+                    "type": "string"
+                },
+                "initialValue": {
+                    "description": "Initial value to be pre-filled into the input field.",
+                    "type": [
+                        "string",
+                        "boolean"
+                    ]
+                },
+                "label": {
+                    "description": "The label that is displayed to the user for the input field.",
+                    "type": "string"
+                },
+                "required": {
+                    "description": "If the field is required or not.",
+                    "type": "boolean"
+                },
+                "placeholder": {
+                    "description": "Placeholder value.",
+                    "type": "boolean"
+                },
+                "options": {
+                    "description": "An array of optional values the user can choose.",
+                    "type": "array",
+                    "items": {
+                        "label": {
+                            "description": "Label displayed to the user.",
+                            "type": "string"
+                        },
+                        "value": {
+                            "description": "The value retured to the bot if the user chooses this option.",
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "textFormItem": {
+            "description": "An text form item.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "description": "The type of the input field.",
+                    "enum": [
+                        "text"
+                    ]
+                },
+                "name": {
+                    "description": "Unique name of the input field.",
+                    "type": "string"
+                },
+                "initialValue": {
+                    "description": "Initial value to be pre-filled into the input field.",
+                    "type": [
+                        "boolean"
+                    ]
+                },
+                "label": {
+                    "description": "The label that is displayed to the user for the input field.",
+                    "type": "string"
+                },
+                "required": {
+                    "description": "If the field is required or not.",
+                    "type": "boolean"
+                }
+            }
+        },
+        "emailFormItem": {
+            "description": "An email form item.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "description": "The type of the input field.",
+                    "enum": [
+                        "email"
+                    ]
+                },
+                "name": {
+                    "description": "Unique name of the input field.",
+                    "type": "string"
+                },
+                "initialValue": {
+                    "description": "Initial value to be pre-filled into the input field.",
+                    "type": [
+                        "boolean"
+                    ]
+                },
+                "label": {
+                    "description": "The label that is displayed to the user for the input field.",
+                    "type": "string"
+                },
+                "required": {
+                    "description": "If the field is required or not.",
+                    "type": "boolean"
+                }
+            }
+        },
+        "phoneNumberFormItem": {
+            "description": "A phone number form item.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "description": "The type of the input field.",
+                    "enum": [
+                        "phoneNumber"
+                    ]
+                },
+                "name": {
+                    "description": "Unique name of the input field.",
+                    "type": "string"
+                },
+                "initialValue": {
+                    "description": "Initial value to be pre-filled into the input field.",
+                    "type": [
+                        "boolean"
+                    ]
+                },
+                "label": {
+                    "description": "The label that is displayed to the user for the input field.",
+                    "type": "string"
+                },
+                "required": {
+                    "description": "If the field is required or not.",
+                    "type": "boolean"
+                },
+                "preferredCountryCodes": {
+                    "description": "A comma sepparated list of preferred country codes.",
+                    "type": "string"
+                },
+                "initialCountryCode": {
+                    "description": "The country code initially displayed to the user.",
+                    "type": "string"
+                }
+            }
+        },
         "messageBack": {
             "additionalProperties": false,
             "required": [
@@ -646,9 +907,8 @@
                     "description": "Privacy text for input form.",
                     "type": "string"
                 },
-                "inputs": {
-                    "description": "Input items for an input form.",
-                    "type": "array"
+                "form": {
+                    "$ref": "#/$defs/form"
                 },
                 "inputState": {
                     "description": "The state of the input bar.",
