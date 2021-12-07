@@ -40,6 +40,7 @@
     ],
     "$defs": {
         "respond": {
+            "type": "object",
             "additionalProperties": false,
             "required": [
                 "type"
@@ -94,6 +95,7 @@
             }
         },
         "sub-journey": {
+            "type": "object",
             "additionalProperties": false,
             "required": [
                 "type",
@@ -123,6 +125,7 @@
             }
         },
         "webhook": {
+            "type": "object",
             "additionalProperties": false,
             "required": [
                 "type",
@@ -203,6 +206,7 @@
         },
         "security": {
             "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "type": {
                     "description": "Security type to be used.",
@@ -826,6 +830,7 @@
             }
         },
         "messageBack": {
+            "type": "object",
             "additionalProperties": false,
             "required": [
                 "type",
@@ -854,6 +859,7 @@
             }
         },
         "openUrl": {
+            "type": "object",
             "additionalProperties": false,
             "required": [
                 "type",
