@@ -665,13 +665,18 @@
                     "description": "An array of optional values the user can choose.",
                     "type": "array",
                     "items": {
-                        "label": {
-                            "description": "Label displayed to the user.",
-                            "type": "string"
-                        },
-                        "value": {
-                            "description": "The value retured to the bot if the user chooses this option.",
-                            "type": "string"
+                        "type": "object",
+                        "required": ["label", "value"],
+                        "additionalProperties": false,
+                        "properties": {
+                            "label": {
+                                "description": "Label displayed to the user.",
+                                "type": "string"
+                            },
+                            "value": {
+                                "description": "The value retured to the bot if the user chooses this option.",
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -714,13 +719,18 @@
                     "description": "An array of optional values the user can choose.",
                     "type": "array",
                     "items": {
-                        "label": {
-                            "description": "Label displayed to the user.",
-                            "type": "string"
-                        },
-                        "value": {
-                            "description": "The value retured to the bot if the user chooses this option.",
-                            "type": "string"
+                        "type": "object",
+                        "required": ["label", "value"],
+                        "additionalProperties": false,
+                        "properties": {
+                            "label": {
+                                "description": "Label displayed to the user.",
+                                "type": "string"
+                            },
+                            "value": {
+                                "description": "The value retured to the bot if the user chooses this option.",
+                                "type": "string"
+                            }
                         }
                     }
                 }
