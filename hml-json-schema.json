@@ -650,8 +650,7 @@
                 "initialValue": {
                     "description": "Initial value to be pre-filled into the input field.",
                     "type": [
-                        "string",
-                        "boolean"
+                        "string"
                     ]
                 },
                 "label": {
@@ -696,8 +695,7 @@
                 "initialValue": {
                     "description": "Initial value to be pre-filled into the input field.",
                     "type": [
-                        "string",
-                        "boolean"
+                        "string"
                     ]
                 },
                 "label": {
