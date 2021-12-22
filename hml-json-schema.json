@@ -313,10 +313,6 @@
                         "description": "Test against inputText.",
                         "type": "string"
                     },
-                    "js": {
-                        "description": "A js condition.",
-                        "type": "string"
-                    },
                     "value": {
                         "description": "The value to test against.",
                         "type": "string"
@@ -499,73 +495,160 @@
         "attachments": {
             "type": "array",
             "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                    "contentType": {
-                        "description": "Content type of the attachment.",
-                        "enum": [
-                            "image/png",
-                            "image/jpg",
-                            "image/jpeg",
-                            "image/gif",
-                            "application/vnd.humanise-ai.card.button",
-                            "application/vnd.microsoft.card.adaptive",
-                            "application/vnd.humanise-ai.card.contact",
-                            "application/vnd.humanise-ai.card.hero",
-                            "application/vnd.humanise-ai.card.request-translation"
-                        ]
+                "anyOf": [
+                    {
+                        "$ref": "#/$defs/attachmentsImage"
                     },
-                    "contentVersion": {
-                        "description": "Content version of the attachment.",
-                        "type": "integer"
+                    {
+                        "$ref": "#/$defs/attachmentsButtonCard"
                     },
-                    "contentUrl": {
-                        "description": "Content url of the attachment.",
-                        "type": "string"
+                    {
+                        "$ref": "#/$defs/attachmentsHeroCard"
                     },
-                    "name": {
-                        "description": "Name of the attachment.",
-                        "type": "string"
-                    },
-                    "content": {
-                        "description": "Content of the attachment.",
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                            "imageUrl": {
-                                "description": "Image of the content.",
-                                "type": "string"
-                            },
-                            "title": {
-                                "description": "Title of the content.",
-                                "type": "string"
-                            },
-                            "subtitle": {
-                                "description": "Subtitle of the content.",
-                                "type": "string"
-                            },
-                            "text": {
-                                "description": "Text of the content.",
-                                "type": "string"
-                            },
-                            "buttons": {
-                                "description": "Buttons",
-                                "type": "array",
-                                "items": {
-                                    "anyOf": [
-                                        {
-                                            "$ref": "#/$defs/messageBack"
-                                        },
-                                        {
-                                            "$ref": "#/$defs/openUrl"
-                                        }
-                                    ]
-                                }
+                    {
+                        "$ref": "#/$defs/attachmentsEmbeddedMedia"
+                    }
+                ]
+            }
+        },
+        "attachmentsImage": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["contentType", "contentUrl"],
+            "properties": {
+                "contentType": {
+                    "description": "Content type of the attachment.",
+                    "enum": [
+                        "image/png",
+                        "image/jpg",
+                        "image/jpeg",
+                        "image/gif"
+                    ]
+                },
+                "contentUrl": {
+                    "description": "Content url of the attachment.",
+                    "type": "string"
+                }
+            }
+        },
+        "attachmentsButtonCard": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["contentType", "contentVersion", "content"],
+            "properties": {
+                "contentType": {
+                    "description": "Content type of the attachment.",
+                    "enum": [
+                        "application/vnd.humanise-ai.card.button",
+                    ]
+                },
+                "contentVersion": {
+                    "description": "Content version of the attachment.",
+                    "type": "integer"
+                },
+                "content": {
+                    "description": "Content of the attachment.",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["text", "buttons"],
+                    "properties": {
+                        "text": {
+                            "description": "Text of the content.",
+                            "type": "string"
+                        },
+                        "buttons": {
+                            "description": "Buttons",
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/$defs/messageBack"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/openUrl"
+                                    }
+                                ]
                             }
                         }
                     }
                 }
+            }
+        },
+        "attachmentsHeroCard": {
+            "contentType": {
+                "description": "Content type of the attachment.",
+                "enum": [
+                    "image/png",
+                    "image/jpg",
+                    "image/jpeg",
+                    "image/gif",
+                    "application/vnd.humanise-ai.card.button",
+                    "application/vnd.microsoft.card.adaptive",
+                    "application/vnd.humanise-ai.card.contact",
+                    "application/vnd.humanise-ai.card.hero",
+                    "application/vnd.humanise-ai.card.request-translation"
+                ]
+            },
+            "contentVersion": {
+                "description": "Content version of the attachment.",
+                "type": "integer"
+            },
+            "contentUrl": {
+                "description": "Content url of the attachment.",
+                "type": "string"
+            },
+            "name": {
+                "description": "Name of the attachment.",
+                "type": "string"
+            },
+            "content": {
+                "description": "Content of the attachment.",
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                    "imageUrl": {
+                        "description": "Image of the content.",
+                        "type": "string"
+                    },
+                    "title": {
+                        "description": "Title of the content.",
+                        "type": "string"
+                    },
+                    "subtitle": {
+                        "description": "Subtitle of the content.",
+                        "type": "string"
+                    },
+                    "text": {
+                        "description": "Text of the content.",
+                        "type": "string"
+                    },
+                    "buttons": {
+                        "description": "Buttons",
+                        "type": "array",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/$defs/messageBack"
+                                },
+                                {
+                                    "$ref": "#/$defs/openUrl"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "attachmentsEmbeddedMedia": {
+            "contentType": {
+                "description": "Content type of the attachment.",
+                "enum": [
+                    "application/vnd.humanise-ai.card.media"
+                ]
+            },
+            "contentUrl": {
+                "description": "Content url of the attachment.",
+                "type": "string"
             }
         },
         "form": {
