@@ -539,7 +539,7 @@
                 "contentType": {
                     "description": "Content type of the attachment.",
                     "enum": [
-                        "application/vnd.humanise-ai.card.button",
+                        "application/vnd.humanise-ai.card.button"
                     ]
                 },
                 "contentVersion": {
