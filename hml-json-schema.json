@@ -1,1021 +1,1021 @@
 {
-    "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "HumaniseAI HML",
-    "description": "A schema to define HumaniseAI HML",
-    "type": "object",
-    "additionalProperties": false,
-    "properties": {
-        "id": {
-            "description": "ID of an HML journey.",
-            "type": "string"
-        },
-        "name": {
-            "description": "Name of the HML journey.",
-            "type": "string"
-        },
-        "description": {
-            "description": "Description of the HML journey.",
-            "type": "string"
-        },
-        "steps": {
-            "description": "An array of steps of the HML journey.",
-            "type": "array",
-            "items": {
-                "anyOf": [
-                    {
-                        "$ref": "#/$defs/respond"
-                    },
-                    {
-                        "$ref": "#/$defs/webhook"
-                    },
-                    {
-                        "$ref": "#/$defs/sub-journey"
-                    }
-                ]
-            }
-        }
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HumaniseAI HML",
+  "description": "A schema to define HumaniseAI HML",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "description": "ID of an HML journey.",
+      "type": "string"
     },
-    "required": [
-        "steps"
-    ],
-    "$defs": {
-        "respond": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-                "type"
-            ],
-            "properties": {
-                "isPotentialStartStepConfig": {
-                    "description": "Is this a start step or not?",
-                    "type": "boolean"
-                },
-                "id": {
-                    "description": "Optional unique id of the step.",
-                    "type": "string"
-                },
-                "type": {
-                    "enum": [
-                        "respond",
-                        "respondAndWait"
-                    ]
-                },
-                "response": {
-                    "description": "A single response.",
-                    "$ref": "#/$defs/response"
-                },
-                "responses": {
-                    "description": "An array of responses.",
-                    "$ref": "#/$defs/responses"
-                },
-                "conditions": {
-                    "description": "Conditions under which this step will be executed.",
-                    "$ref": "#/$defs/conditions"
-                },
-                "addVariables": {
-                    "description": "Variables to add to the journey context.",
-                    "$ref": "#/$defs/addVariables"
-                },
-                "children": {
-                    "description": "An array of child nodes.",
-                    "$ref": "#/properties/steps"
-                },
-                "goto": {
-                    "description": "Node to jump to.",
-                    "type": "string"
-                },
-                "events": {
-                    "description": "Create an event.",
-                    "$ref": "#/$defs/events"
-                },
-                "tasks": {
-                    "description": "Generate a human task.",
-                    "$ref": "#/$defs/tasks"
-                }
-            }
+    "name": {
+      "description": "Name of the HML journey.",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description of the HML journey.",
+      "type": "string"
+    },
+    "steps": {
+      "description": "An array of steps of the HML journey.",
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/respond"
+          },
+          {
+            "$ref": "#/$defs/sub-journey"
+          },
+          {
+            "$ref": "#/$defs/nudge"
+          },
+          {
+            "$ref": "#/$defs/webhook"
+          }
+        ]
+      }
+    }
+  },
+  "required": ["steps"],
+  "$defs": {
+    "respond": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "isPotentialStartStepConfig": {
+          "description": "Is this a start step or not?",
+          "type": "boolean"
         },
-        "sub-journey": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-                "type",
-                "subJourneyName"
-            ],
-            "properties": {
-                "isPotentialStartStepConfig": {
-                    "description": "Is this a start step or not?",
-                    "type": "boolean"
-                },
-                "id": {
-                    "description": "Optional unique id of the step.",
-                    "type": "string"
-                },
-                "type": {
-                    "enum": [
-                        "executeSubJourney"
-                    ]
-                },
-                "subJourneyName": {
-                    "description": "Execute a sub journey.",
-                    "type": "string"
-                },
-                "children": {
-                    "$ref": "#/properties/steps"
-                }
-            }
+        "id": {
+          "description": "Optional unique id of the step.",
+          "type": "string"
         },
-        "webhook": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-                "type",
-                "method",
-                "url"
-            ],
-            "properties": {
-                "isPotentialStartStepConfig": {
-                    "description": "Is this a start step or not?",
-                    "type": "boolean"
-                },
-                "id": {
-                    "description": "Optional unique id of the step.",
-                    "type": "string"
-                },
-                "type": {
-                    "enum": [
-                        "webhook"
-                    ]
-                },
-                "method": {
-                    "description": "Webhook HTTP method to be used.",
-                    "$ref": "#/$defs/httpMethods"
-                },
-                "url": {
-                    "description": "Webhook URL to call.",
-                    "type": "string"
-                },
-                "headers": {
-                    "description": "Webhook http headers to apply to the call.",
-                    "type": "object"
-                },
-                "security": {
-                    "description": "Security for webhook.",
-                    "$ref": "#/$defs/security"
-                },
-                "queryParams": {
-                    "description": "Webhook query parameters to apply.",
-                    "type": "object"
-                },
-                "body": {
-                    "description": "Webhook body of the request.",
-                    "type": "object"
-                },
-                "resultVariablePath": {
-                    "description": "Webhook variable path to place the result of the call.",
-                    "type": "string"
-                },
-                "subJourneyName": {
-                    "description": "Execute a sub journey.",
-                    "type": "string"
-                },
-                "conditions": {
-                    "description": "Conditions under which this step will be executed.",
-                    "$ref": "#/$defs/conditions"
-                },
-                "addVariables": {
-                    "description": "Variables to add to the journey context.",
-                    "$ref": "#/$defs/addVariables"
-                },
-                "children": {
-                    "description": "An array of child nodes.",
-                    "$ref": "#/properties/steps"
-                },
-                "goto": {
-                    "description": "Node to jump to.",
-                    "type": "string"
-                },
-                "events": {
-                    "description": "Create an event.",
-                    "$ref": "#/$defs/events"
-                },
-                "tasks": {
-                    "description": "Generate a human task.",
-                    "$ref": "#/$defs/tasks"
-                }
-            }
-        },
-        "security": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "description": "Security type to be used.",
-                    "enum": [
-                        "basic",
-                        "bearer"
-                    ]
-                },
-                "token": {
-                    "description": "Security token to be used.",
-                    "type": "string"
-                },
-                "userid": {
-                    "description": "Userid to be used.",
-                    "type": "string"
-                },
-                "password": {
-                    "description": "Password to be used.",
-                    "type": "string"
-                }
-            }
-        },
-        "tasks": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "attributes": {
-                        "description": "Attributes of the task.",
-                        "type": "object",
-                        "properties": {
-                            "tags": {
-                                "type": "string",
-                                "description": "Comma separated list of tag names."
-                            },
-                            "group": {
-                                "type": "string"
-                            },
-                            "team": {
-                                "type": "string"
-                            },
-                            "content": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "events": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "module": {
-                        "description": "Name of module eg core, accommodation.",
-                        "enum": [
-                            "core",
-                            "accommodation"
-                        ]
-                    },
-                    "name": {
-                        "description": "Name of event.",
-                        "type": "string"
-                    },
-                    "detailLevel": {
-                        "description": "Detail level of event - should be an int.",
-                        "type": "integer"
-                    }
-                }
-            }
-        },
-        "conditions": {
-            "anyOf": [
-                {
-                    "$ref": "#/$defs/shortConditions"
-                },
-                {
-                    "$ref": "#/$defs/longConditions"
-                }
-            ]
-        },
-        "shortConditions": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
-        },
-        "longConditions": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "additionalProperties": false,
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "enum": [
-                            "jsExpression",
-                            "inputText",
-                            "journeyVariables"
-                        ]
-                    },
-                    "inputText": {
-                        "description": "Test against inputText.",
-                        "type": "string"
-                    },
-                    "value": {
-                        "description": "The value to test against.",
-                        "type": "string"
-                    },
-                    "variableNamePath": {
-                        "description": "Path name of variable to test eg some.path.variable.",
-                        "type": "string"
-                    },
-                    "reference": {
-                        "description": "The test eg isTruthy.",
-                        "type": "string"
-                    }
-                }
-            }
+        "type": {
+          "enum": ["respond", "respondAndWait"]
         },
         "response": {
-            "anyOf": [
-                {
-                    "$ref": "#/$defs/shortResponse"
-                },
-                {
-                    "$ref": "#/$defs/longResponse"
-                }
-            ]
-        },
-        "shortResponse": {
-            "type": "string"
-        },
-        "longResponse": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "description": "The type of the response.",
-                    "enum": [
-                        "text",
-                        "activity",
-                        "jsExpression"
-                    ]
-                },
-                "value": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/$defs/shortResponseValue"
-                        },
-                        {
-                            "$ref": "#/$defs/longResponseValue"
-                        }
-                    ]
-                }
-            },
-            "required": [
-                "type",
-                "value"
-            ]
-        },
-        "longResponseValue": {
-            "description": "The responses themselves.",
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-                "text"
-            ],
-            "properties": {
-                "text": {
-                    "description": "A textual response.",
-                    "type": "string"
-                },
-                "attachmentLayout": {
-                    "description": "The layout of attachments - list of carousel.",
-                    "enum": [
-                        "list",
-                        "carousel"
-                    ]
-                },
-                "suggestedActions": {
-                    "description": "An arrary of suggestedActions (quick replies).",
-                    "$ref": "#/$defs/suggestedActions"
-                },
-                "attachments": {
-                    "description": "Attachments to the message eg images, cards, etc.",
-                    "$ref": "#/$defs/attachments"
-                }
-            }
-        },
-        "shortResponseValue": {
-            "type": "string"
+          "description": "A single response.",
+          "$ref": "#/$defs/response"
         },
         "responses": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "description": "The type of the response.",
-                    "enum": [
-                        "text",
-                        "activity",
-                        "jsExpression"
-                    ]
-                },
-                "values": {
-                    "description": "The responses themselves.",
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "additionalProperties": false,
-                        "properties": {
-                            "text": {
-                                "description": "A textual response.",
-                                "type": "string"
-                            },
-                            "attachmentLayout": {
-                                "description": "The layout of attachments - list of carousel.",
-                                "enum": [
-                                    "list",
-                                    "carousel"
-                                ]
-                            },
-                            "suggestedActions": {
-                                "description": "An arrary of suggestedActions (quick replies).",
-                                "$ref": "#/$defs/suggestedActions"
-                            },
-                            "attachments": {
-                                "description": "Attachments to the message eg images, cards, etc.",
-                                "$ref": "#/$defs/attachments"
-                            }
-                        },
-                        "required": [
-                            "text"
-                        ]
-                    }
-                }
-            },
-            "required": [
-                "type",
-                "values"
-            ]
+          "description": "An array of responses.",
+          "$ref": "#/$defs/responses"
+        },
+        "conditions": {
+          "description": "Conditions under which this step will be executed.",
+          "$ref": "#/$defs/conditions"
         },
         "addVariables": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "path": {
-                        "description": "Path of the variable.",
-                        "type": "string"
-                    },
-                    "value": {
-                        "description": "Value to be assinged.",
-                        "type": "string"
-                    },
-                    "type": {
-                        "description": "Type of assignment.",
-                        "enum": [
-                            "jsExpression"
-                        ]
-                    }
-                }
+          "description": "Variables to add to the journey context.",
+          "$ref": "#/$defs/addVariables"
+        },
+        "children": {
+          "description": "An array of child nodes.",
+          "$ref": "#/properties/steps"
+        },
+        "goto": {
+          "description": "Node to jump to.",
+          "type": "string"
+        },
+        "events": {
+          "description": "Create an event.",
+          "$ref": "#/$defs/events"
+        },
+        "tasks": {
+          "description": "Generate a human task.",
+          "$ref": "#/$defs/tasks"
+        }
+      }
+    },
+    "sub-journey": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "subJourneyName"],
+      "properties": {
+        "isPotentialStartStepConfig": {
+          "description": "Is this a start step or not?",
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Optional unique id of the step.",
+          "type": "string"
+        },
+        "type": {
+          "enum": ["executeSubJourney"]
+        },
+        "subJourneyName": {
+          "description": "Execute a sub journey.",
+          "type": "string"
+        },
+        "children": {
+          "description": "An array of child nodes.",
+          "$ref": "#/properties/steps"
+        },
+        "goto": {
+          "description": "Node to jump to.",
+          "type": "string"
+        },
+        "events": {
+          "description": "Create an event.",
+          "$ref": "#/$defs/events"
+        },
+        "tasks": {
+          "description": "Generate a human task.",
+          "$ref": "#/$defs/tasks"
+        }
+      }
+    },
+    "nudge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "channel"],
+      "properties": {
+        "isPotentialStartStepConfig": {
+          "description": "Is this a start step or not?",
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Optional unique id of the step.",
+          "type": "string"
+        },
+        "type": {
+          "enum": ["nudge", "nudgeAndWait"]
+        },
+        "channel": {
+          "enum": ["email", "sms"]
+        },
+        "conditions": {
+          "description": "Conditions under which this step will be executed.",
+          "$ref": "#/$defs/conditions"
+        },
+        "addVariables": {
+          "description": "Variables to add to the journey context.",
+          "$ref": "#/$defs/addVariables"
+        },
+        "children": {
+          "description": "An array of child nodes.",
+          "$ref": "#/properties/steps"
+        },
+        "goto": {
+          "description": "Node to jump to.",
+          "type": "string"
+        },
+        "events": {
+          "description": "Create an event.",
+          "$ref": "#/$defs/events"
+        },
+        "tasks": {
+          "description": "Generate a human task.",
+          "$ref": "#/$defs/tasks"
+        },
+        "details": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/emailNudgeDetails"
+            },
+            {
+              "$ref": "#/$defs/smsNudgeDetails"
             }
+          ]
+        }
+      }
+    },
+    "emailNudgeDetails": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject", "bodyType", "body", "text"],
+      "properties": {
+        "from": {
+          "description": "Who the email is from",
+          "type": "string"
         },
-        "httpMethods": {
-            "enum": [
-                "GET",
-                "POST",
-                "HEAD",
-                "PUT",
-                "DELETE",
-                "CONNECT",
-                "OPTIONS",
-                "TRACE",
-                "PATCH"
-            ]
+        "subject": {
+          "description": "Email Subject",
+          "type": "string"
         },
-        "buttonTypes": {
-            "enum": [
-                "openUrl",
-                "messageBack"
-            ]
+        "bodyType": {
+          "description": "Type of body - mjml or html. If mjml, it will be converted to html upon sending",
+          "type": "string"
         },
-        "attachments": {
-            "type": "array",
-            "items": {
-                "anyOf": [
-                    {
-                        "$ref": "#/$defs/attachmentsImage"
-                    },
-                    {
-                        "$ref": "#/$defs/attachmentsButtonCard"
-                    },
-                    {
-                        "$ref": "#/$defs/attachmentsHeroCard"
-                    },
-                    {
-                        "$ref": "#/$defs/attachmentsEmbeddedMedia"
-                    }
-                ]
-            }
+        "body": {
+          "description": "Email body",
+          "type": "string"
         },
-        "attachmentsImage": {
+        "text": {
+          "description": "Text email version for the clients that can't read html",
+          "type": "string"
+        }
+      }
+    },
+    "smsNudgeDetails": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["from", "body"],
+      "properties": {
+        "from": {
+          "description": "Who the email is from",
+          "type": "string"
+        },
+        "body": {
+          "description": "Sms body, the actual message",
+          "type": "string"
+        }
+      }
+    },
+    "webhook": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "method", "url"],
+      "properties": {
+        "isPotentialStartStepConfig": {
+          "description": "Is this a start step or not?",
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Optional unique id of the step.",
+          "type": "string"
+        },
+        "type": {
+          "enum": ["webhook"]
+        },
+        "method": {
+          "description": "Webhook HTTP method to be used.",
+          "$ref": "#/$defs/httpMethods"
+        },
+        "url": {
+          "description": "Webhook URL to call.",
+          "type": "string"
+        },
+        "headers": {
+          "description": "Webhook http headers to apply to the call.",
+          "type": "object"
+        },
+        "security": {
+          "description": "Security for webhook.",
+          "$ref": "#/$defs/security"
+        },
+        "queryParams": {
+          "description": "Webhook query parameters to apply.",
+          "type": "object"
+        },
+        "body": {
+          "description": "Webhook body of the request.",
+          "type": "object"
+        },
+        "resultVariablePath": {
+          "description": "Webhook variable path to place the result of the call.",
+          "type": "string"
+        },
+        "subJourneyName": {
+          "description": "Execute a sub journey.",
+          "type": "string"
+        },
+        "conditions": {
+          "description": "Conditions under which this step will be executed.",
+          "$ref": "#/$defs/conditions"
+        },
+        "addVariables": {
+          "description": "Variables to add to the journey context.",
+          "$ref": "#/$defs/addVariables"
+        },
+        "children": {
+          "description": "An array of child nodes.",
+          "$ref": "#/properties/steps"
+        },
+        "goto": {
+          "description": "Node to jump to.",
+          "type": "string"
+        },
+        "events": {
+          "description": "Create an event.",
+          "$ref": "#/$defs/events"
+        },
+        "tasks": {
+          "description": "Generate a human task.",
+          "$ref": "#/$defs/tasks"
+        }
+      }
+    },
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "Security type to be used.",
+          "enum": ["basic", "bearer"]
+        },
+        "token": {
+          "description": "Security token to be used.",
+          "type": "string"
+        },
+        "userid": {
+          "description": "Userid to be used.",
+          "type": "string"
+        },
+        "password": {
+          "description": "Password to be used.",
+          "type": "string"
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "attributes": {
+            "description": "Attributes of the task.",
             "type": "object",
-            "additionalProperties": false,
-            "required": ["contentType", "contentUrl"],
             "properties": {
-                "contentType": {
-                    "description": "Content type of the attachment.",
-                    "enum": [
-                        "image/png",
-                        "image/jpg",
-                        "image/jpeg",
-                        "image/gif"
-                    ]
-                },
-                "contentUrl": {
-                    "description": "Content url of the attachment.",
-                    "type": "string"
-                }
+              "tags": {
+                "type": "string",
+                "description": "Comma separated list of tag names."
+              },
+              "group": {
+                "type": "string"
+              },
+              "team": {
+                "type": "string"
+              },
+              "content": {
+                "type": "object"
+              }
             }
+          }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "module": {
+            "description": "Name of module eg core, accommodation.",
+            "enum": ["core", "accommodation"]
+          },
+          "name": {
+            "description": "Name of event.",
+            "type": "string"
+          },
+          "detailLevel": {
+            "description": "Detail level of event - should be an int.",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "conditions": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/shortConditions"
         },
-        "attachmentsButtonCard": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["contentType", "contentVersion", "content"],
-            "properties": {
-                "contentType": {
-                    "description": "Content type of the attachment.",
-                    "enum": [
-                        "application/vnd.humanise-ai.card.button"
-                    ]
-                },
-                "contentVersion": {
-                    "description": "Content version of the attachment.",
-                    "type": "integer"
-                },
-                "content": {
-                    "description": "Content of the attachment.",
-                    "type": "object",
-                    "additionalProperties": false,
-                    "required": ["text", "buttons"],
-                    "properties": {
-                        "text": {
-                            "description": "Text of the content.",
-                            "type": "string"
-                        },
-                        "buttons": {
-                            "description": "Buttons",
-                            "type": "array",
-                            "items": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/$defs/messageBack"
-                                    },
-                                    {
-                                        "$ref": "#/$defs/openUrl"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
+        {
+          "$ref": "#/$defs/longConditions"
+        }
+      ]
+    },
+    "shortConditions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "longConditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["jsExpression", "inputText", "journeyVariables"]
+          },
+          "inputText": {
+            "description": "Test against inputText.",
+            "type": "string"
+          },
+          "value": {
+            "description": "The value to test against.",
+            "type": "string"
+          },
+          "variableNamePath": {
+            "description": "Path name of variable to test eg some.path.variable.",
+            "type": "string"
+          },
+          "reference": {
+            "description": "The test eg isTruthy.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "response": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/shortResponse"
         },
-        "attachmentsHeroCard": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["contentType", "contentVersion", "content"],
-            "properties": {
-                "contentType": {
-                    "description": "Content type of the attachment.",
-                    "enum": [
-                        "application/vnd.humanise-ai.card.hero"
-                    ]
-                },
-                "contentVersion": {
-                    "description": "Content version of the attachment.",
-                    "type": "integer"
-                },
-                "content": {
-                    "description": "Content of the attachment.",
-                    "type": "object",
-                    "additionalProperties": false,
-                    "properties": {
-                        "imageUrl": {
-                            "description": "Image of the content.",
-                            "type": "string"
-                        },
-                        "title": {
-                            "description": "Title of the content.",
-                            "type": "string"
-                        },
-                        "subtitle": {
-                            "description": "Subtitle of the content.",
-                            "type": "string"
-                        },
-                        "buttons": {
-                            "description": "Buttons",
-                            "type": "array",
-                            "items": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/$defs/messageBack"
-                                    },
-                                    {
-                                        "$ref": "#/$defs/openUrl"
-                                    }
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
+        {
+          "$ref": "#/$defs/longResponse"
+        }
+      ]
+    },
+    "shortResponse": {
+      "type": "string"
+    },
+    "longResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "The type of the response.",
+          "enum": ["text", "activity", "jsExpression"]
         },
-        "attachmentsEmbeddedMedia": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": ["contentType", "contentUrl"],
-            "properties": {
-                "contentType": {
-                    "description": "Content type of the attachment.",
-                    "enum": [
-                        "application/vnd.humanise-ai.card.media"
-                    ]
-                },
-                "contentUrl": {
-                    "description": "Content url of the attachment.",
-                    "type": "string"
-                }
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/shortResponseValue"
+            },
+            {
+              "$ref": "#/$defs/longResponseValue"
             }
+          ]
+        }
+      },
+      "required": ["type", "value"]
+    },
+    "longResponseValue": {
+      "description": "The responses themselves.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": {
+          "description": "A textual response.",
+          "type": "string"
         },
-        "form": {
-            "description": "An input form.",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "inputs": {
-                    "description": "Input items for the input form.",
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/$defs/checkboxFormItem"
-                            },
-                            {
-                                "$ref": "#/$defs/optionButtonsFormItem"
-                            },
-                            {
-                                "$ref": "#/$defs/selectFormItem"
-                            },
-                            {
-                                "$ref": "#/$defs/textFormItem"
-                            },
-                            {
-                                "$ref": "#/$defs/emailFormItem"
-                            },
-                            {
-                                "$ref": "#/$defs/phoneNumberFormItem"
-                            }
-                        ]
-                    }
-                }
-            }
-        },
-        "checkboxFormItem": {
-            "description": "A checkbox form item.",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "description": "The type of the input field.",
-                    "enum": [
-                        "checkbox"
-                    ]
-                },
-                "name": {
-                    "description": "Unique name of the input field.",
-                    "type": "string"
-                },
-                "initialValue": {
-                    "description": "Initial value to be pre-filled into the input field.",
-                    "type": [
-                        "boolean"
-                    ]
-                },
-                "label": {
-                    "description": "The label that is displayed to the user for the input field.",
-                    "type": "string"
-                },
-                "required": {
-                    "description": "If the field is required or not.",
-                    "type": "boolean"
-                }
-            }
-        },
-        "optionButtonsFormItem": {
-            "description": "An options button form item.",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "description": "The type of the input field.",
-                    "enum": [
-                        "optionButtons"
-                    ]
-                },
-                "name": {
-                    "description": "Unique name of the input field.",
-                    "type": "string"
-                },
-                "initialValue": {
-                    "description": "Initial value to be pre-filled into the input field.",
-                    "type": [
-                        "string"
-                    ]
-                },
-                "label": {
-                    "description": "The label that is displayed to the user for the input field.",
-                    "type": "string"
-                },
-                "required": {
-                    "description": "If the field is required or not.",
-                    "type": "boolean"
-                },
-                "options": {
-                    "description": "An array of optional values the user can choose.",
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "required": ["label", "value"],
-                        "additionalProperties": false,
-                        "properties": {
-                            "label": {
-                                "description": "Label displayed to the user.",
-                                "type": "string"
-                            },
-                            "value": {
-                                "description": "The value retured to the bot if the user chooses this option.",
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "selectFormItem": {
-            "description": "A select form item.",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "description": "The type of the input field.",
-                    "enum": [
-                        "select"
-                    ]
-                },
-                "name": {
-                    "description": "Unique name of the input field.",
-                    "type": "string"
-                },
-                "initialValue": {
-                    "description": "Initial value to be pre-filled into the input field.",
-                    "type": [
-                        "string"
-                    ]
-                },
-                "label": {
-                    "description": "The label that is displayed to the user for the input field.",
-                    "type": "string"
-                },
-                "required": {
-                    "description": "If the field is required or not.",
-                    "type": "boolean"
-                },
-                "placeholder": {
-                    "description": "Placeholder value.",
-                    "type": "boolean"
-                },
-                "options": {
-                    "description": "An array of optional values the user can choose.",
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "required": ["label", "value"],
-                        "additionalProperties": false,
-                        "properties": {
-                            "label": {
-                                "description": "Label displayed to the user.",
-                                "type": "string"
-                            },
-                            "value": {
-                                "description": "The value retured to the bot if the user chooses this option.",
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "textFormItem": {
-            "description": "An text form item.",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "description": "The type of the input field.",
-                    "enum": [
-                        "text"
-                    ]
-                },
-                "name": {
-                    "description": "Unique name of the input field.",
-                    "type": "string"
-                },
-                "initialValue": {
-                    "description": "Initial value to be pre-filled into the input field.",
-                    "type": [
-                        "boolean"
-                    ]
-                },
-                "label": {
-                    "description": "The label that is displayed to the user for the input field.",
-                    "type": "string"
-                },
-                "required": {
-                    "description": "If the field is required or not.",
-                    "type": "boolean"
-                }
-            }
-        },
-        "emailFormItem": {
-            "description": "An email form item.",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "description": "The type of the input field.",
-                    "enum": [
-                        "email"
-                    ]
-                },
-                "name": {
-                    "description": "Unique name of the input field.",
-                    "type": "string"
-                },
-                "initialValue": {
-                    "description": "Initial value to be pre-filled into the input field.",
-                    "type": [
-                        "boolean"
-                    ]
-                },
-                "label": {
-                    "description": "The label that is displayed to the user for the input field.",
-                    "type": "string"
-                },
-                "required": {
-                    "description": "If the field is required or not.",
-                    "type": "boolean"
-                }
-            }
-        },
-        "phoneNumberFormItem": {
-            "description": "A phone number form item.",
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "type": {
-                    "description": "The type of the input field.",
-                    "enum": [
-                        "phoneNumber"
-                    ]
-                },
-                "name": {
-                    "description": "Unique name of the input field.",
-                    "type": "string"
-                },
-                "initialValue": {
-                    "description": "Initial value to be pre-filled into the input field.",
-                    "type": [
-                        "boolean"
-                    ]
-                },
-                "label": {
-                    "description": "The label that is displayed to the user for the input field.",
-                    "type": "string"
-                },
-                "required": {
-                    "description": "If the field is required or not.",
-                    "type": "boolean"
-                },
-                "preferredCountryCodes": {
-                    "description": "A comma sepparated list of preferred country codes.",
-                    "type": "string"
-                },
-                "initialCountryCode": {
-                    "description": "The country code initially displayed to the user.",
-                    "type": "string"
-                }
-            }
-        },
-        "messageBack": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-                "type",
-                "title",
-                "text"
-            ],
-            "properties": {
-                "type": {
-                    "description": "The button type - openUrl or messageBack.",
-                    "enum": [
-                        "messageBack"
-                    ]
-                },
-                "title": {
-                    "description": "The title of the button.",
-                    "type": "string"
-                },
-                "text": {
-                    "description": "The text returned to the bot when the button is clicked.",
-                    "type": "string"
-                },
-                "meta": {
-                    "description": "Metadata to tag the button with, e.g. primary/seconday.",
-                    "type": "string"
-                }
-            }
-        },
-        "openUrl": {
-            "type": "object",
-            "additionalProperties": false,
-            "required": [
-                "type",
-                "title",
-                "value"
-            ],
-            "properties": {
-                "type": {
-                    "description": "The button type - openUrl or messageBack.",
-                    "enum": [
-                        "openUrl"
-                    ]
-                },
-                "title": {
-                    "description": "The title of the button.",
-                    "type": "string"
-                },
-                "value": {
-                    "description": "The text returned to the bot when the button is clicked.",
-                    "type": "string"
-                },
-                "meta": {
-                    "description": "Metadata to tag the button with, e.g. primary/seconday.",
-                    "type": "string"
-                }
-            }
+        "attachmentLayout": {
+          "description": "The layout of attachments - list of carousel.",
+          "enum": ["list", "carousel"]
         },
         "suggestedActions": {
+          "description": "An arrary of suggestedActions (quick replies).",
+          "$ref": "#/$defs/suggestedActions"
+        },
+        "attachments": {
+          "description": "Attachments to the message eg images, cards, etc.",
+          "$ref": "#/$defs/attachments"
+        }
+      }
+    },
+    "shortResponseValue": {
+      "type": "string"
+    },
+    "responses": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "The type of the response.",
+          "enum": ["text", "activity", "jsExpression"]
+        },
+        "values": {
+          "description": "The responses themselves.",
+          "type": "array",
+          "items": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "actions": {
-                    "description": "Buttons.",
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/$defs/messageBack"
-                            },
-                            {
-                                "$ref": "#/$defs/openUrl"
-                            }
-                        ]
-                    }
-                },
-                "confirmationText": {
-                    "description": "Confirmation text that's displayed when the input form is submitted.",
-                    "type": "string"
-                },
-                "privacyText": {
-                    "description": "Privacy text for input form.",
-                    "type": "string"
-                },
-                "form": {
-                    "$ref": "#/$defs/form"
-                },
-                "inputState": {
-                    "description": "The state of the input bar.",
-                    "enum": [
-                        "disabled",
-                        "hidden",
-                        "visible"
-                    ]
-                },
-                "orientation": {
-                    "description": "Orientation of the buttons.",
-                    "enum": [
-                        "horizontal",
-                        "vertical"
-                    ]
-                }
+              "text": {
+                "description": "A textual response.",
+                "type": "string"
+              },
+              "attachmentLayout": {
+                "description": "The layout of attachments - list of carousel.",
+                "enum": ["list", "carousel"]
+              },
+              "suggestedActions": {
+                "description": "An arrary of suggestedActions (quick replies).",
+                "$ref": "#/$defs/suggestedActions"
+              },
+              "attachments": {
+                "description": "Attachments to the message eg images, cards, etc.",
+                "$ref": "#/$defs/attachments"
+              }
             },
-            "required": [
-                "actions"
-            ]
+            "required": ["text"]
+          }
         }
+      },
+      "required": ["type", "values"]
+    },
+    "addVariables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "description": "Path of the variable.",
+            "type": "string"
+          },
+          "value": {
+            "description": "Value to be assinged.",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type of assignment.",
+            "enum": ["jsExpression"]
+          }
+        }
+      }
+    },
+    "httpMethods": {
+      "enum": [
+        "GET",
+        "POST",
+        "HEAD",
+        "PUT",
+        "DELETE",
+        "CONNECT",
+        "OPTIONS",
+        "TRACE",
+        "PATCH"
+      ]
+    },
+    "buttonTypes": {
+      "enum": ["openUrl", "messageBack"]
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/attachmentsImage"
+          },
+          {
+            "$ref": "#/$defs/attachmentsButtonCard"
+          },
+          {
+            "$ref": "#/$defs/attachmentsHeroCard"
+          },
+          {
+            "$ref": "#/$defs/attachmentsEmbeddedMedia"
+          }
+        ]
+      }
+    },
+    "attachmentsImage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentType", "contentUrl"],
+      "properties": {
+        "contentType": {
+          "description": "Content type of the attachment.",
+          "enum": ["image/png", "image/jpg", "image/jpeg", "image/gif"]
+        },
+        "contentUrl": {
+          "description": "Content url of the attachment.",
+          "type": "string"
+        }
+      }
+    },
+    "attachmentsButtonCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentType", "contentVersion", "content"],
+      "properties": {
+        "contentType": {
+          "description": "Content type of the attachment.",
+          "enum": ["application/vnd.humanise-ai.card.button"]
+        },
+        "contentVersion": {
+          "description": "Content version of the attachment.",
+          "type": "integer"
+        },
+        "content": {
+          "description": "Content of the attachment.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["text", "buttons"],
+          "properties": {
+            "text": {
+              "description": "Text of the content.",
+              "type": "string"
+            },
+            "buttons": {
+              "description": "Buttons",
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/messageBack"
+                  },
+                  {
+                    "$ref": "#/$defs/openUrl"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "attachmentsHeroCard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentType", "contentVersion", "content"],
+      "properties": {
+        "contentType": {
+          "description": "Content type of the attachment.",
+          "enum": ["application/vnd.humanise-ai.card.hero"]
+        },
+        "contentVersion": {
+          "description": "Content version of the attachment.",
+          "type": "integer"
+        },
+        "content": {
+          "description": "Content of the attachment.",
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "imageUrl": {
+              "description": "Image of the content.",
+              "type": "string"
+            },
+            "title": {
+              "description": "Title of the content.",
+              "type": "string"
+            },
+            "subtitle": {
+              "description": "Subtitle of the content.",
+              "type": "string"
+            },
+            "buttons": {
+              "description": "Buttons",
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/messageBack"
+                  },
+                  {
+                    "$ref": "#/$defs/openUrl"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "attachmentsEmbeddedMedia": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentType", "contentUrl"],
+      "properties": {
+        "contentType": {
+          "description": "Content type of the attachment.",
+          "enum": ["application/vnd.humanise-ai.card.media"]
+        },
+        "contentUrl": {
+          "description": "Content url of the attachment.",
+          "type": "string"
+        }
+      }
+    },
+    "form": {
+      "description": "An input form.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "inputs": {
+          "description": "Input items for the input form.",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/checkboxFormItem"
+              },
+              {
+                "$ref": "#/$defs/optionButtonsFormItem"
+              },
+              {
+                "$ref": "#/$defs/selectFormItem"
+              },
+              {
+                "$ref": "#/$defs/textFormItem"
+              },
+              {
+                "$ref": "#/$defs/emailFormItem"
+              },
+              {
+                "$ref": "#/$defs/phoneNumberFormItem"
+              }
+            ]
+          }
+        }
+      }
+    },
+    "checkboxFormItem": {
+      "description": "A checkbox form item.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "The type of the input field.",
+          "enum": ["checkbox"]
+        },
+        "name": {
+          "description": "Unique name of the input field.",
+          "type": "string"
+        },
+        "initialValue": {
+          "description": "Initial value to be pre-filled into the input field.",
+          "type": ["boolean"]
+        },
+        "label": {
+          "description": "The label that is displayed to the user for the input field.",
+          "type": "string"
+        },
+        "required": {
+          "description": "If the field is required or not.",
+          "type": "boolean"
+        }
+      }
+    },
+    "optionButtonsFormItem": {
+      "description": "An options button form item.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "The type of the input field.",
+          "enum": ["optionButtons"]
+        },
+        "name": {
+          "description": "Unique name of the input field.",
+          "type": "string"
+        },
+        "initialValue": {
+          "description": "Initial value to be pre-filled into the input field.",
+          "type": ["string"]
+        },
+        "label": {
+          "description": "The label that is displayed to the user for the input field.",
+          "type": "string"
+        },
+        "required": {
+          "description": "If the field is required or not.",
+          "type": "boolean"
+        },
+        "options": {
+          "description": "An array of optional values the user can choose.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "label": {
+                "description": "Label displayed to the user.",
+                "type": "string"
+              },
+              "value": {
+                "description": "The value retured to the bot if the user chooses this option.",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "selectFormItem": {
+      "description": "A select form item.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "The type of the input field.",
+          "enum": ["select"]
+        },
+        "name": {
+          "description": "Unique name of the input field.",
+          "type": "string"
+        },
+        "initialValue": {
+          "description": "Initial value to be pre-filled into the input field.",
+          "type": ["string"]
+        },
+        "label": {
+          "description": "The label that is displayed to the user for the input field.",
+          "type": "string"
+        },
+        "required": {
+          "description": "If the field is required or not.",
+          "type": "boolean"
+        },
+        "placeholder": {
+          "description": "Placeholder value.",
+          "type": "boolean"
+        },
+        "options": {
+          "description": "An array of optional values the user can choose.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "label": {
+                "description": "Label displayed to the user.",
+                "type": "string"
+              },
+              "value": {
+                "description": "The value retured to the bot if the user chooses this option.",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "textFormItem": {
+      "description": "An text form item.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "The type of the input field.",
+          "enum": ["text"]
+        },
+        "name": {
+          "description": "Unique name of the input field.",
+          "type": "string"
+        },
+        "initialValue": {
+          "description": "Initial value to be pre-filled into the input field.",
+          "type": ["boolean"]
+        },
+        "label": {
+          "description": "The label that is displayed to the user for the input field.",
+          "type": "string"
+        },
+        "required": {
+          "description": "If the field is required or not.",
+          "type": "boolean"
+        }
+      }
+    },
+    "emailFormItem": {
+      "description": "An email form item.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "The type of the input field.",
+          "enum": ["email"]
+        },
+        "name": {
+          "description": "Unique name of the input field.",
+          "type": "string"
+        },
+        "initialValue": {
+          "description": "Initial value to be pre-filled into the input field.",
+          "type": ["boolean"]
+        },
+        "label": {
+          "description": "The label that is displayed to the user for the input field.",
+          "type": "string"
+        },
+        "required": {
+          "description": "If the field is required or not.",
+          "type": "boolean"
+        }
+      }
+    },
+    "phoneNumberFormItem": {
+      "description": "A phone number form item.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "The type of the input field.",
+          "enum": ["phoneNumber"]
+        },
+        "name": {
+          "description": "Unique name of the input field.",
+          "type": "string"
+        },
+        "initialValue": {
+          "description": "Initial value to be pre-filled into the input field.",
+          "type": ["boolean"]
+        },
+        "label": {
+          "description": "The label that is displayed to the user for the input field.",
+          "type": "string"
+        },
+        "required": {
+          "description": "If the field is required or not.",
+          "type": "boolean"
+        },
+        "preferredCountryCodes": {
+          "description": "A comma sepparated list of preferred country codes.",
+          "type": "string"
+        },
+        "initialCountryCode": {
+          "description": "The country code initially displayed to the user.",
+          "type": "string"
+        }
+      }
+    },
+    "messageBack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "title", "text"],
+      "properties": {
+        "type": {
+          "description": "The button type - openUrl or messageBack.",
+          "enum": ["messageBack"]
+        },
+        "title": {
+          "description": "The title of the button.",
+          "type": "string"
+        },
+        "text": {
+          "description": "The text returned to the bot when the button is clicked.",
+          "type": "string"
+        },
+        "meta": {
+          "description": "Metadata to tag the button with, e.g. primary/seconday.",
+          "type": "string"
+        }
+      }
+    },
+    "openUrl": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "title", "value"],
+      "properties": {
+        "type": {
+          "description": "The button type - openUrl or messageBack.",
+          "enum": ["openUrl"]
+        },
+        "title": {
+          "description": "The title of the button.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The text returned to the bot when the button is clicked.",
+          "type": "string"
+        },
+        "meta": {
+          "description": "Metadata to tag the button with, e.g. primary/seconday.",
+          "type": "string"
+        }
+      }
+    },
+    "suggestedActions": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "actions": {
+          "description": "Buttons.",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/messageBack"
+              },
+              {
+                "$ref": "#/$defs/openUrl"
+              }
+            ]
+          }
+        },
+        "confirmationText": {
+          "description": "Confirmation text that's displayed when the input form is submitted.",
+          "type": "string"
+        },
+        "privacyText": {
+          "description": "Privacy text for input form.",
+          "type": "string"
+        },
+        "form": {
+          "$ref": "#/$defs/form"
+        },
+        "inputState": {
+          "description": "The state of the input bar.",
+          "enum": ["disabled", "hidden", "visible"]
+        },
+        "orientation": {
+          "description": "Orientation of the buttons.",
+          "enum": ["horizontal", "vertical"]
+        }
+      },
+      "required": ["actions"]
     }
+  }
 }
