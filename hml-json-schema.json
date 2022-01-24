@@ -17,6 +17,26 @@
       "description": "Description of the HML journey.",
       "type": "string"
     },
+    "version": {
+      "description": "Version number in semver format eg 1.0.0.",
+      "type": "string"
+    },
+    "versionUpgradingBehaviour": {
+      "description": "Upgrading behaviour for existing travellers on a journey when a new version is deployed.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["journeyConfigVersionNumberType", "journeyStepConfigsType"],
+      "properties": {
+        "journeyConfigVersionNumberType": {
+          "description": "When to upgade travellers on a prior version of the journey to the new version – on major, minor, patch or never.",
+          "enum": ["MAJOR", "MINOR", "PATCH", "NEVER"]
+        },
+        "journeyStepConfigsType": {
+          "description": "Upgrade behaviour – upgrade steps that have a name (UPGRADE_ON_NAMED_JOURNEY_CONFIG_STEPS), or on specified steps (UPGRADE_ON_SPECIFIED_JOURNEY_CONFIG_STEPS).",
+          "enum": ["UPGRADE_ON_NAMED_JOURNEY_CONFIG_STEPS", "UPGRADE_ON_SPECIFIED_JOURNEY_CONFIG_STEPS"]
+        }
+      }
+    },
     "steps": {
       "description": "An array of steps of the HML journey.",
       "type": "array",
@@ -55,6 +75,10 @@
         },
         "type": {
           "enum": ["respond", "respondAndWait"]
+        },
+        "isUpgradeable": {
+          "description": "Can travellers on this step of a journey be upgraded to a new version of the journey?",
+          "type": "boolean"
         },
         "response": {
           "description": "A single response.",
@@ -106,6 +130,10 @@
         "type": {
           "enum": ["executeSubJourney"]
         },
+        "isUpgradeable": {
+          "description": "Can travellers on this step of a journey be upgraded to a new version of the journey?",
+          "type": "boolean"
+        },
         "subJourneyName": {
           "description": "Execute a sub journey.",
           "type": "string"
@@ -154,6 +182,10 @@
         "type": {
           "enum": ["nudge", "nudgeAndWait"]
         },
+        "isUpgradeable": {
+          "description": "Can travellers on this step of a journey be upgraded to a new version of the journey?",
+          "type": "boolean"
+        },
         "channel": {
           "enum": ["email"]
         },
@@ -201,6 +233,10 @@
         },
         "type": {
           "enum": ["nudge", "nudgeAndWait"]
+        },
+        "isUpgradeable": {
+          "description": "Can travellers on this step of a journey be upgraded to a new version of the journey?",
+          "type": "boolean"
         },
         "channel": {
           "enum": ["sms"]
@@ -291,6 +327,10 @@
         },
         "type": {
           "enum": ["webhook"]
+        },
+        "isUpgradeable": {
+          "description": "Can travellers on this step of a journey be upgraded to a new version of the journey?",
+          "type": "boolean"
         },
         "method": {
           "description": "Webhook HTTP method to be used.",
