@@ -129,6 +129,16 @@
       }
     },
     "nudge": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/emailNudge"
+        },
+        {
+          "$ref": "#/$defs/smsNudge"
+        }
+      ]
+    },
+    "emailNudge": {
       "type": "object",
       "additionalProperties": false,
       "required": ["type", "channel"],
@@ -145,7 +155,7 @@
           "enum": ["nudge", "nudgeAndWait"]
         },
         "channel": {
-          "enum": ["email", "sms"]
+          "enum": ["email"]
         },
         "conditions": {
           "description": "Conditions under which this step will be executed.",
@@ -172,14 +182,55 @@
           "$ref": "#/$defs/tasks"
         },
         "details": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/emailNudgeDetails"
-            },
-            {
-              "$ref": "#/$defs/smsNudgeDetails"
-            }
-          ]
+          "$ref": "#/$defs/emailNudgeDetails"
+        }
+      }
+    },
+    "smsNudge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "channel"],
+      "properties": {
+        "isPotentialStartStepConfig": {
+          "description": "Is this a start step or not?",
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Optional unique id of the step.",
+          "type": "string"
+        },
+        "type": {
+          "enum": ["nudge", "nudgeAndWait"]
+        },
+        "channel": {
+          "enum": ["sms"]
+        },
+        "conditions": {
+          "description": "Conditions under which this step will be executed.",
+          "$ref": "#/$defs/conditions"
+        },
+        "addVariables": {
+          "description": "Variables to add to the journey context.",
+          "$ref": "#/$defs/addVariables"
+        },
+        "children": {
+          "description": "An array of child nodes.",
+          "$ref": "#/properties/steps"
+        },
+        "goto": {
+          "description": "Node to jump to.",
+          "type": "string"
+        },
+        "events": {
+          "description": "Create an event.",
+          "$ref": "#/$defs/events"
+        },
+        "tasks": {
+          "description": "Generate a human task.",
+          "$ref": "#/$defs/tasks"
+        },
+        "details": {
+          "$ref": "#/$defs/smsNudgeDetails"
         }
       }
     },
