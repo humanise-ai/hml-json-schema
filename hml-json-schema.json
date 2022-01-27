@@ -33,7 +33,10 @@
         },
         "journeyStepConfigsType": {
           "description": "Upgrade behaviour – upgrade steps that have a name (UPGRADE_ON_NAMED_JOURNEY_CONFIG_STEPS), or on specified steps (UPGRADE_ON_SPECIFIED_JOURNEY_CONFIG_STEPS).",
-          "enum": ["UPGRADE_ON_NAMED_JOURNEY_CONFIG_STEPS", "UPGRADE_ON_SPECIFIED_JOURNEY_CONFIG_STEPS"]
+          "enum": [
+            "UPGRADE_ON_NAMED_JOURNEY_CONFIG_STEPS",
+            "UPGRADE_ON_SPECIFIED_JOURNEY_CONFIG_STEPS"
+          ]
         }
       }
     },
@@ -111,6 +114,10 @@
         "tasks": {
           "description": "Generate a human task.",
           "$ref": "#/$defs/tasks"
+        },
+        "entitiesToFind": {
+          "description": "Detect entities within the last input text from the user",
+          "$ref": "#/$defs/entitiesToFind"
         }
       }
     },
@@ -213,6 +220,10 @@
           "description": "Generate a human task.",
           "$ref": "#/$defs/tasks"
         },
+        "entitiesToFind": {
+          "description": "Detect entities within the last input text from the user",
+          "$ref": "#/$defs/entitiesToFind"
+        },
         "details": {
           "$ref": "#/$defs/emailNudgeDetails"
         }
@@ -264,6 +275,10 @@
         "tasks": {
           "description": "Generate a human task.",
           "$ref": "#/$defs/tasks"
+        },
+        "entitiesToFind": {
+          "description": "Detect entities within the last input text from the user",
+          "$ref": "#/$defs/entitiesToFind"
         },
         "details": {
           "$ref": "#/$defs/smsNudgeDetails"
@@ -457,6 +472,25 @@
             "type": "integer"
           }
         }
+      }
+    },
+    "entitiesToFind": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "time",
+          "temperature",
+          "number",
+          "ordinal",
+          "distance",
+          "volume",
+          "amount-of-money",
+          "duration",
+          "email",
+          "url",
+          "phone-number"
+        ]
       }
     },
     "conditions": {
