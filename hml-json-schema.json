@@ -475,23 +475,32 @@
       }
     },
     "entitiesToFind": {
-      "type": "array",
-      "uniqueItems": true,
-      "items": {
-        "enum": [
-          "time",
-          "temperature",
-          "number",
-          "ordinal",
-          "distance",
-          "volume",
-          "amount-of-money",
-          "duration",
-          "email",
-          "url",
-          "phone-number"
-        ]
-      }
+      "type": "object",
+      "properties": {
+        "types": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "time",
+              "temperature",
+              "number",
+              "ordinal",
+              "distance",
+              "volume",
+              "amount-of-money",
+              "duration",
+              "email",
+              "url",
+              "phone-number"
+            ]
+          }
+        },
+        "locale": {
+          "type": "string"
+        }
+      },
+      "required": ["types"]
     },
     "conditions": {
       "anyOf": [
