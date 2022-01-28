@@ -592,8 +592,8 @@
           "type": "string"
         },
         "attachmentLayout": {
-          "description": "The layout of attachments - list of carousel.",
-          "enum": ["list", "carousel"]
+          "description": "The layout of attachments - list or carousel.",
+          "enum": ["list", "carousel", "wideList"]
         },
         "suggestedActions": {
           "description": "An arrary of suggestedActions (quick replies).",
@@ -628,8 +628,8 @@
                 "type": "string"
               },
               "attachmentLayout": {
-                "description": "The layout of attachments - list of carousel.",
-                "enum": ["list", "carousel"]
+                "description": "The layout of attachments - list or carousel.",
+                "enum": ["list", "carousel", "wideList"]
               },
               "suggestedActions": {
                 "description": "An arrary of suggestedActions (quick replies).",
@@ -687,6 +687,9 @@
       "items": {
         "anyOf": [
           {
+            "$ref": "#/$defs/attachmentsTranslation"
+          },
+          {
             "$ref": "#/$defs/attachmentsImage"
           },
           {
@@ -699,6 +702,16 @@
             "$ref": "#/$defs/attachmentsEmbeddedMedia"
           }
         ]
+      }
+    },
+    "attachmentsTranslation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "contentType": {
+          "description": "Content type of the attachment.",
+          "enum": ["application/vnd.humanise-ai.card.request-translation"]
+        }
       }
     },
     "attachmentsImage": {
