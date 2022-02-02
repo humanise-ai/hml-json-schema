@@ -627,7 +627,7 @@
                 "description": "A textual response.",
                 "type": "string"
               },
-              "attachmentLayout": {
+              "layout": {
                 "description": "The layout of attachments - list or carousel.",
                 "enum": ["list", "carousel", "wideList"]
               },
