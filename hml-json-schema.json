@@ -1004,7 +1004,7 @@
         },
         "initialValue": {
           "description": "Initial value to be pre-filled into the input field.",
-          "type": ["boolean"]
+          "type": ["string"]
         },
         "label": {
           "description": "The label that is displayed to the user for the input field.",
@@ -1031,7 +1031,7 @@
         },
         "initialValue": {
           "description": "Initial value to be pre-filled into the input field.",
-          "type": ["boolean"]
+          "type": ["string"]
         },
         "label": {
           "description": "The label that is displayed to the user for the input field.",
@@ -1058,7 +1058,7 @@
         },
         "initialValue": {
           "description": "Initial value to be pre-filled into the input field.",
-          "type": ["boolean"]
+          "type": ["string"]
         },
         "label": {
           "description": "The label that is displayed to the user for the input field.",
