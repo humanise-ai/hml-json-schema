@@ -1013,6 +1013,10 @@
         "required": {
           "description": "If the field is required or not.",
           "type": "boolean"
+        },
+        "regex": {
+          "description": "A regex to validate the input.",
+          "type": "string"
         }
       }
     },
