@@ -657,7 +657,7 @@
           },
           "value": {
             "description": "Value to be assinged.",
-            "type": "string"
+            "type": ["string", "boolean"]
           },
           "type": {
             "description": "Type of assignment.",
