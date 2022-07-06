@@ -369,7 +369,7 @@
         },
         "body": {
           "description": "Webhook body of the request.",
-          "type": "object"
+          "type": ["object", "string"]
         },
         "resultVariablePath": {
           "description": "Webhook variable path to place the result of the call.",
@@ -534,7 +534,7 @@
           },
           "value": {
             "description": "The value to test against.",
-            "type": "string"
+            "type": ["string", "boolean"]
           },
           "variableNamePath": {
             "description": "Path name of variable to test eg some.path.variable.",
