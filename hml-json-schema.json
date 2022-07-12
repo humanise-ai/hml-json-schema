@@ -315,12 +315,8 @@
     "smsNudgeDetails": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["from", "body"],
+      "required": ["body"],
       "properties": {
-        "from": {
-          "description": "Who the email is from",
-          "type": "string"
-        },
         "body": {
           "description": "Sms body, the actual message",
           "type": "string"
