@@ -317,10 +317,6 @@
       "additionalProperties": false,
       "required": ["body"],
       "properties": {
-        "from": {
-          "description": "Who the email is from",
-          "type": "string"
-        },
         "body": {
           "description": "Sms body, the actual message",
           "type": "string"
