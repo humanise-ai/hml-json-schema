@@ -365,7 +365,7 @@
         },
         "body": {
           "description": "Webhook body of the request.",
-          "type": "object"
+          "type": ["object", "string"]
         },
         "resultVariablePath": {
           "description": "Webhook variable path to place the result of the call.",
@@ -530,7 +530,7 @@
           },
           "value": {
             "description": "The value to test against.",
-            "type": "string"
+            "type": ["string", "boolean"]
           },
           "variableNamePath": {
             "description": "Path name of variable to test eg some.path.variable.",
@@ -588,8 +588,8 @@
           "type": "string"
         },
         "attachmentLayout": {
-          "description": "The layout of attachments - list of carousel.",
-          "enum": ["list", "carousel"]
+          "description": "The layout of attachments - list or carousel.",
+          "enum": ["list", "carousel", "wideList"]
         },
         "suggestedActions": {
           "description": "An arrary of suggestedActions (quick replies).",
@@ -623,9 +623,9 @@
                 "description": "A textual response.",
                 "type": "string"
               },
-              "attachmentLayout": {
-                "description": "The layout of attachments - list of carousel.",
-                "enum": ["list", "carousel"]
+              "layout": {
+                "description": "The layout of attachments - list or carousel.",
+                "enum": ["list", "carousel", "wideList"]
               },
               "suggestedActions": {
                 "description": "An arrary of suggestedActions (quick replies).",
@@ -653,7 +653,7 @@
           },
           "value": {
             "description": "Value to be assinged.",
-            "type": "string"
+            "type": ["string", "boolean"]
           },
           "type": {
             "description": "Type of assignment.",
@@ -683,6 +683,9 @@
       "items": {
         "anyOf": [
           {
+            "$ref": "#/$defs/attachmentsTranslation"
+          },
+          {
             "$ref": "#/$defs/attachmentsImage"
           },
           {
@@ -695,6 +698,16 @@
             "$ref": "#/$defs/attachmentsEmbeddedMedia"
           }
         ]
+      }
+    },
+    "attachmentsTranslation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "contentType": {
+          "description": "Content type of the attachment.",
+          "enum": ["application/vnd.humanise-ai.card.request-translation"]
+        }
       }
     },
     "attachmentsImage": {
@@ -987,7 +1000,7 @@
         },
         "initialValue": {
           "description": "Initial value to be pre-filled into the input field.",
-          "type": ["boolean"]
+          "type": ["string"]
         },
         "label": {
           "description": "The label that is displayed to the user for the input field.",
@@ -996,6 +1009,10 @@
         "required": {
           "description": "If the field is required or not.",
           "type": "boolean"
+        },
+        "regex": {
+          "description": "A regex to validate the input.",
+          "type": "string"
         }
       }
     },
@@ -1014,7 +1031,7 @@
         },
         "initialValue": {
           "description": "Initial value to be pre-filled into the input field.",
-          "type": ["boolean"]
+          "type": ["string"]
         },
         "label": {
           "description": "The label that is displayed to the user for the input field.",
@@ -1041,7 +1058,7 @@
         },
         "initialValue": {
           "description": "Initial value to be pre-filled into the input field.",
-          "type": ["boolean"]
+          "type": ["string"]
         },
         "label": {
           "description": "The label that is displayed to the user for the input field.",
