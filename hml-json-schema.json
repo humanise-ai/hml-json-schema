@@ -91,6 +91,10 @@
           "description": "An array of responses.",
           "$ref": "#/$defs/responses"
         },
+        "waitForAction": {
+          "description": "An action to wait for to finish step",
+          "$ref": "#/$defs/waitForAction"
+        },
         "conditions": {
           "description": "Conditions under which this step will be executed.",
           "$ref": "#/$defs/conditions"
@@ -641,6 +645,21 @@
         }
       },
       "required": ["type", "values"]
+    },
+    "waitForAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "description": "The type of the activity we are waiting for",
+          "enum": ["event"]
+        },
+        "reference" {
+          "description": "The type of info we are looking in the event",
+          "enum": ["primaryTag", "secondaryTag"]
+        },
+        "tagName": "string"
+      }
     },
     "addVariables": {
       "type": "array",
