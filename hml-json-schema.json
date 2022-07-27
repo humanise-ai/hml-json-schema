@@ -658,8 +658,12 @@
           "description": "The type of info we are looking in the event",
           "enum": ["primaryTag", "secondaryTag"]
         },
-        "tagName": "string"
-      }
+        "tagName": {
+          "description": "The tagName of the 'reference' type to look for",
+          "type": "string"
+        }
+      },
+      "required": ["type", "reference", "tagName"]
     },
     "addVariables": {
       "type": "array",
