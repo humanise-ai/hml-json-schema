@@ -654,7 +654,7 @@
           "description": "The type of the activity we are waiting for",
           "enum": ["event"]
         },
-        "reference" {
+        "reference": {
           "description": "The type of info we are looking in the event",
           "enum": ["primaryTag", "secondaryTag"]
         },
